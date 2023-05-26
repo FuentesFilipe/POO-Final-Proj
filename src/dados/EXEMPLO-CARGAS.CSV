@@ -1,0 +1,3 @@
+codigo;cliente;origem;destino;peso;valordeclarado;tempomaximo;tipocarga;prioridade;situacao
+222;2222;22;33;30000;100000,00;10;22222;RAPIDO;PENDENTE
+111;1111;11;22;60000;102000,00;3;11111;BARATO;PENDENTE
