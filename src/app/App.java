@@ -10,9 +10,12 @@ import java.util.Scanner;
 
 public class App {
     private Scanner entrada = null; // Atributo para entrada de dados
+    private Scanner entradaUsuario = null;
+    private int escolha = -1;
     // Construtor
     public App() {
         Locale.setDefault(Locale.ENGLISH);
+        entradaUsuario = new Scanner(System.in);
         try {
             BufferedReader streamEntrada = new BufferedReader(new FileReader("dados.csv"));
             entrada = new Scanner(streamEntrada); // Usa como entrada um arquivo
@@ -24,7 +27,12 @@ public class App {
     }
 
     public void executa() {
-        mostraMenu();
+        while(escolha != 12) {
+            mostraMenu();
+            escolha = entradaUsuario.nextInt();
+            entradaUsuario.nextLine();
+            System.out.println();
+        }
     }
 
     private void mostraMenu() {
