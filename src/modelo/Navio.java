@@ -1,3 +1,5 @@
+package modelo;
+
 public class Navio {
     private String nome;
     private double velocidade;

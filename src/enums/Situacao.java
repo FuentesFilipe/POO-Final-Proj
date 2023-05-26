@@ -1,3 +1,5 @@
+package enums;
+
 public enum Situacao {
     PENDENTE("Pendente"), LOCADO("Locado"), CANCELADO("Cancelado"), FINALIZADO("Finalizado");
 

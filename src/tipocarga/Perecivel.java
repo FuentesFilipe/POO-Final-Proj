@@ -1,3 +1,5 @@
+package tipocarga;
+
 public class Perecivel extends TipoCarga {
     private String origem;
     private int tempoMaxVelocidade;

@@ -1,3 +1,8 @@
+package modelo;
+
+import enums.Situacao;
+import tipocarga.*;
+
 public class Carga {
     private int identificador;
     private int peso;
@@ -7,7 +12,7 @@ public class Carga {
     private Porto origem;
     private Porto destino;
     private TipoCarga tipoCarga;
-    private  Situacao situacao;
+    private Situacao situacao;
 
     public Carga(
             int identificador, int peso, double valorDeclarado, int tempoMaximo,

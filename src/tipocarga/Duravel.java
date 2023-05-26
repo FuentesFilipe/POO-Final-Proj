@@ -1,3 +1,5 @@
+package tipocarga;
+
 public class Duravel extends TipoCarga {
     private String setor;
     private String materialPrincipal;
