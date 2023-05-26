@@ -1,7 +1,8 @@
 package modelo;
 
 import enums.Situacao;
-import tipocarga.*;
+import modelo.tipocarga.*;
+
 
 public class Carga {
     private int identificador;

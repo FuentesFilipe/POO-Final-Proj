@@ -1,4 +1,4 @@
-package tipocarga;
+package modelo.tipocarga;
 
 public abstract class TipoCarga {
     private int numero;
