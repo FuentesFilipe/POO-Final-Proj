@@ -17,7 +17,7 @@ public class Carga {
 
     public Carga(
             int identificador, int peso, double valorDeclarado, int tempoMaximo,
-            Cliente cliente, Porto origem, Porto destino, TipoCarga tipoCarga, Situacao situacao) {
+            Cliente cliente, Porto origem, Porto destino, TipoCarga tipoCarga) {
         this.identificador = identificador;
         this.peso = peso;
         this.valorDeclarado = valorDeclarado;
@@ -26,7 +26,7 @@ public class Carga {
         this.origem = origem;
         this.destino = destino;
         this.tipoCarga = tipoCarga;
-        this.situacao = situacao;
+        this.situacao = Situacao.PENDENTE;
     }
 
     public int getIdentificador() {
