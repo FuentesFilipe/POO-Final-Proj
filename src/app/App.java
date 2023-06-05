@@ -1,9 +1,9 @@
 package app;
 
 import colecoes.*;
-import dados.*;
-import enums.*;
-import modelo.*;
+//import dados.*;
+//import enums.*;
+//import modelo.*;
 
 
 import java.io.*;
@@ -16,16 +16,8 @@ public class App {
     private Scanner entradaUsuario = null;
     private int escolha = -1;
 
-    private final String[] caminhos = {
-            "dados/EXEMPLO-CARGAS.CSV",
-            "dados/EXEMPLO-CLIENTES.CSV",
-            "dados/EXEMPLO-NAVIOS.CSV",
-            "dados/EXEMPLO-PORTOS.CSV",
-            "dados/EXEMPLO-TIPOSCARGAS.CSV"
-    };
     // Construtor
     public App() {
-        Locale.setDefault(Locale.ENGLISH);
         entradaUsuario = new Scanner(System.in);
         try {
             BufferedReader streamEntrada = new BufferedReader(new FileReader("dados.csv"));
@@ -52,8 +44,10 @@ public class App {
 
             switch(escolha) {
                 case 8:
-                    lerDadosIniciais(caminhos);
-
+                    System.out.println("Carregando dados iniciais...");
+                    clientela.carregaDadosIniciais();
+                    portuario.carregaDadosIniciais();
+                    frota.carregaDadosIniciais();
                     break;
                 case 0:
                     System.out.println("Finalizando sistema...");
@@ -62,24 +56,6 @@ public class App {
                     System.out.println("Opção inválida!");
                     break;
             }
-        }
-    }
-
-    private void lerDadosIniciais(String [] caminhos) {
-        try {
-            for (String caminho : caminhos) {
-                File arquivo = new File(caminho);
-                Scanner scanner = new Scanner(arquivo);
-
-                // ler arquivos csv e armazenar seus dados
-                while (scanner.hasNextLine()) {
-                    String line = scanner.nextLine();
-                    // Parse the line and create objects as needed
-                    // ...
-                }
-            }
-        } catch (FileNotFoundException e) {
-            System.err.println("ERR: Arquivo não encontrado!");
         }
     }
 
