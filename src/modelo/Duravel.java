@@ -1,4 +1,4 @@
-package modelo.tipocarga;
+package modelo;
 
 public class Duravel extends TipoCarga {
     private String setor;

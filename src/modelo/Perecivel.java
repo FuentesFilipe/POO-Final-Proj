@@ -1,4 +1,4 @@
-package modelo.tipocarga;
+package modelo;
 
 public class Perecivel extends TipoCarga {
     private String origem;

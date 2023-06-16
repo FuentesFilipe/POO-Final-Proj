@@ -1,8 +1,6 @@
 package colecoes;
 
-import modelo.Navio;
-import modelo.Porto;
-import modelo.tipocarga.*;
+import modelo.*;
 
 import java.io.FileReader;
 import java.util.Scanner;
@@ -50,7 +48,7 @@ public class TipoInventario {
                 }
             }
         } catch (Exception e) {
-            System.out.println(e);
+            System.err.println(e);
         }
     }
 }
