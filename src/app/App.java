@@ -54,43 +54,10 @@ public class App {
                     criarNovoCliente(clientela);
                     break;
                 case 4:
-                    System.out.println("Cadastrando novo tipo de carga...");
-                    System.out.println("Informe o codigo do tipo de carga:");
-                    int codTipoCarga = entradaUsuario.nextInt();
-                    entradaUsuario.nextLine();
-                    System.out.println("Informe a descricao do tipo de carga:");
-                    String descTipoCarga = entradaUsuario.nextLine();
-                    System.out.println("Informe se duravel ou perecivel:");
-                    String catTipoCarga = entradaUsuario.nextLine();
-                    TipoCarga tipoCarga = null;
-                    switch (catTipoCarga.toLowerCase()) {
-                        case "duravel":
-                            System.out.println("Informe o setor:");
-                            String setor = entradaUsuario.nextLine();
-                            System.out.println("Informe o material principal:");
-                            String materialPrincipal = entradaUsuario.nextLine();
-                            System.out.println("Informe o percentual de IPI:");
-                            double percentIpi = entradaUsuario.nextDouble();
-                            tipoCarga = new Duravel(codTipoCarga, descTipoCarga, setor, materialPrincipal, percentIpi);                            break;
-                        case "perecivel":
-                            System.out.println("Informe a origem:");
-                            String origem = entradaUsuario.nextLine();
-                            System.out.println("Informe o tempo maximo de velocidade:");
-                            int tempoMaxVelocidade = entradaUsuario.nextInt();
-                            tipoCarga = new Perecivel(codTipoCarga, descTipoCarga, origem, tempoMaxVelocidade);
-                            break;
-                        default:
-                            System.err.println("Categoria inválida!");
-                            break;
-                    }
-
-                    if (tipoCarga != null) {
-                        if (tipoInventario.addTipoCarga(tipoCarga)) {
-                            System.out.println("Tipo de carga cadastrado com sucesso!");
-                        } else {
-                            System.err.println("Tipo de carga já cadastrado!");
-                        }
-                    }
+                    criarNovoTipoCarga(tipoInventario);
+                    break;
+                case 5:
+                    System.out.println();
                     break;
                 case 8:
                     System.out.println("Carregando dados iniciais...");
@@ -104,6 +71,46 @@ public class App {
                 default:
                     System.out.println("Opção inválida!");
                     break;
+            }
+        }
+    }
+
+    private void criarNovoTipoCarga(TipoInventario tipoInventario) {
+        System.out.println("Cadastrando novo tipo de carga...");
+        System.out.println("Informe o codigo do tipo de carga:");
+        int codTipoCarga = entradaUsuario.nextInt();
+        entradaUsuario.nextLine();
+        System.out.println("Informe a descricao do tipo de carga:");
+        String descTipoCarga = entradaUsuario.nextLine();
+        System.out.println("Informe se duravel ou perecivel:");
+        String catTipoCarga = entradaUsuario.nextLine();
+        TipoCarga tipoCarga = null;
+        switch (catTipoCarga.toLowerCase()) {
+            case "duravel":
+                System.out.println("Informe o setor:");
+                String setor = entradaUsuario.nextLine();
+                System.out.println("Informe o material principal:");
+                String materialPrincipal = entradaUsuario.nextLine();
+                System.out.println("Informe o percentual de IPI:");
+                double percentIpi = entradaUsuario.nextDouble();
+                tipoCarga = new Duravel(codTipoCarga, descTipoCarga, setor, materialPrincipal, percentIpi);                            break;
+            case "perecivel":
+                System.out.println("Informe a origem:");
+                String origem = entradaUsuario.nextLine();
+                System.out.println("Informe o tempo maximo de velocidade:");
+                int tempoMaxVelocidade = entradaUsuario.nextInt();
+                tipoCarga = new Perecivel(codTipoCarga, descTipoCarga, origem, tempoMaxVelocidade);
+                break;
+            default:
+                System.err.println("Categoria inválida!");
+                break;
+        }
+
+        if (tipoCarga != null) {
+            if (tipoInventario.addTipoCarga(tipoCarga)) {
+                System.out.println("Tipo de carga cadastrado com sucesso!");
+            } else {
+                System.err.println("Tipo de carga já cadastrado!");
             }
         }
     }
