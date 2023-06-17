@@ -3,6 +3,7 @@ package app;
 import colecoes.*;
 //import dados.*;
 //import enums.*;
+import enums.Prioridade;
 import modelo.*;
 
 import java.io.*;
@@ -23,7 +24,7 @@ public class App {
         try {
             BufferedReader streamEntrada = new BufferedReader(new FileReader("dados.csv"));
             entrada = new Scanner(streamEntrada); // Usa como entrada um arquivo
-            PrintStream streamSaida = new PrintStream (new File("resultado.csv"), Charset.forName("UTF-8"));
+            PrintStream streamSaida = new PrintStream(new File("resultado.csv"), Charset.forName("UTF-8"));
             System.setOut(streamSaida); // Usa como saida um arquivo
         } catch (Exception e) {
             System.err.println(e);
@@ -37,13 +38,13 @@ public class App {
         TipoInventario tipoInventario = new TipoInventario();
         Portuario portuario = new Portuario();
 
-        while(escolha != 0) {
+        while (escolha != 0) {
             mostraMenu();
             escolha = entradaUsuario.nextInt();
             entradaUsuario.nextLine();
             System.out.println();
 
-            switch(escolha) {
+            switch (escolha) {
                 case 1:
                     criarNovoPorto(portuario);
                     break;
@@ -57,7 +58,7 @@ public class App {
                     criarNovoTipoCarga(tipoInventario);
                     break;
                 case 5:
-                    System.out.println();
+                    criarNovaCarga(inventario);
                     break;
                 case 8:
                     System.out.println("Carregando dados iniciais...");
@@ -75,49 +76,114 @@ public class App {
         }
     }
 
-    private void criarNovoTipoCarga(TipoInventario tipoInventario) {
-        System.out.println("Cadastrando novo tipo de carga...");
-        System.out.println("Informe o codigo do tipo de carga:");
-        int codTipoCarga = entradaUsuario.nextInt();
-        entradaUsuario.nextLine();
-        System.out.println("Informe a descricao do tipo de carga:");
-        String descTipoCarga = entradaUsuario.nextLine();
-        System.out.println("Informe se duravel ou perecivel:");
-        String catTipoCarga = entradaUsuario.nextLine();
-        TipoCarga tipoCarga = null;
-        switch (catTipoCarga.toLowerCase()) {
-            case "duravel":
-                System.out.println("Informe o setor:");
-                String setor = entradaUsuario.nextLine();
-                System.out.println("Informe o material principal:");
-                String materialPrincipal = entradaUsuario.nextLine();
-                System.out.println("Informe o percentual de IPI:");
-                double percentIpi = entradaUsuario.nextDouble();
-                tipoCarga = new Duravel(codTipoCarga, descTipoCarga, setor, materialPrincipal, percentIpi);                            break;
-            case "perecivel":
-                System.out.println("Informe a origem:");
-                String origem = entradaUsuario.nextLine();
-                System.out.println("Informe o tempo maximo de velocidade:");
-                int tempoMaxVelocidade = entradaUsuario.nextInt();
-                tipoCarga = new Perecivel(codTipoCarga, descTipoCarga, origem, tempoMaxVelocidade);
-                break;
-            default:
-                System.err.println("Categoria inválida!");
-                break;
-        }
+    /**
+     * Cria uma nova carga para o sistema a partir da entrada do usuario,
+     * tanto sucesso quanto falha eh informado ao usuario atraves de uma mensagem
+     *
+     * @param inventario Colecao de cargas do sistema
+     */
+    private void criarNovaCarga(Inventario inventario) {
+        try {
+            System.out.println("Cadastrando nova carga...");
+            System.out.println("Informe o codigo da carga:");
+            int codCarga = entradaUsuario.nextInt();
+            entradaUsuario.nextLine();
+            System.out.println("Informe o codigo do cliente:");
+            int codCliente = entradaUsuario.nextInt();
+            entradaUsuario.nextLine();
+            System.out.println("Informe o codigo do porto de origem:");
+            int codPortoOrigem = entradaUsuario.nextInt();
+            entradaUsuario.nextLine();
+            System.out.println("Informe o codigo do porto de destino:");
+            int codPortoDestino = entradaUsuario.nextInt();
+            entradaUsuario.nextLine();
+            System.out.println("Informe o peso:");
+            int peso = entradaUsuario.nextInt();
+            entradaUsuario.nextLine();
+            System.out.println("Declare o valor:");
+            double valorDeclarado = entradaUsuario.nextDouble();
+            System.out.println("Informe o tempo maximo:");
+            int tempoMaximo = entradaUsuario.nextInt();
+            entradaUsuario.nextLine();
+            System.out.println("Informe o codigo do tipo de carga:");
+            int codTipoCarga = entradaUsuario.nextInt();
+            entradaUsuario.nextLine();
+            System.out.println("Informe a prioridade:");
+            Prioridade prioridade = Prioridade.valueOf(entradaUsuario.nextLine().toUpperCase());
+            Carga carga = new Carga(codCarga, codCliente, codPortoOrigem, codPortoDestino, peso,
+                    valorDeclarado, tempoMaximo, codTipoCarga, prioridade);
 
-        if (tipoCarga != null) {
-            if (tipoInventario.addTipoCarga(tipoCarga)) {
-                System.out.println("Tipo de carga cadastrado com sucesso!");
+            if (inventario.addCarga(carga)) {
+                System.out.println("Carga cadastrada com sucesso!");
             } else {
-                System.err.println("Tipo de carga já cadastrado!");
+                System.err.println("Carga não cadastrada!");
             }
+        } catch (InputMismatchException e) {
+            System.err.println("Erro: Entrada inválida para algum codigo.");
+        } catch (NoSuchElementException e) {
+            System.err.println("Erro: Nenhuma entrada fornecida.");
+        } catch (IllegalArgumentException e) {
+            System.err.println("Erro: Prioridade inválida.");
+        }
+    }
+
+    /**
+     * Cria um novo tipo de carga para o sistema a partir da entrada do usuario,
+     * tanto sucesso quanto falha eh informado ao usuario atraves de uma mensagem
+     *
+     * @param tipoInventario Colecao de portos do sistema
+     */
+    private void criarNovoTipoCarga(TipoInventario tipoInventario) {
+        try {
+            System.out.println("Cadastrando novo tipo de carga...");
+            System.out.println("Informe o codigo do tipo de carga:");
+            int codTipoCarga = entradaUsuario.nextInt();
+            entradaUsuario.nextLine();
+            System.out.println("Informe a descricao do tipo de carga:");
+            String descTipoCarga = entradaUsuario.nextLine();
+            System.out.println("Informe se duravel ou perecivel:");
+            String catTipoCarga = entradaUsuario.nextLine();
+            TipoCarga tipoCarga = null;
+            switch (catTipoCarga.toLowerCase()) {
+                case "duravel":
+                    System.out.println("Informe o setor:");
+                    String setor = entradaUsuario.nextLine();
+                    System.out.println("Informe o material principal:");
+                    String materialPrincipal = entradaUsuario.nextLine();
+                    System.out.println("Informe o percentual de IPI:");
+                    double percentIpi = entradaUsuario.nextDouble();
+                    tipoCarga = new Duravel(codTipoCarga, descTipoCarga, setor, materialPrincipal, percentIpi);
+                    break;
+                case "perecivel":
+                    System.out.println("Informe a origem:");
+                    String origem = entradaUsuario.nextLine();
+                    System.out.println("Informe o tempo maximo de velocidade:");
+                    int tempoMaxVelocidade = entradaUsuario.nextInt();
+                    tipoCarga = new Perecivel(codTipoCarga, descTipoCarga, origem, tempoMaxVelocidade);
+                    break;
+                default:
+                    System.err.println("Categoria inválida!");
+                    break;
+            }
+
+            if (tipoCarga != null) {
+                if (tipoInventario.addTipoCarga(tipoCarga)) {
+                    System.out.println("Tipo de carga cadastrado com sucesso!");
+                } else {
+                    System.err.println("Tipo de carga já cadastrado!");
+                }
+            }
+        } catch (InputMismatchException e) {
+            System.err.println("Erro: Entrada inválida para o codigo do tipo de carga.");
+        } catch (NoSuchElementException e) {
+            System.err.println("Erro: Nenhuma entrada fornecida.");
         }
     }
 
     /**
      * Cria um novo cliente para o sistema a partir da entrada do usuario,
      * tanto sucesso quanto falha eh informado ao usuario atraves de uma mensagem
+     *
      * @param clientela Colecao de clientes do sistema
      */
     private void criarNovoCliente(Clientela clientela) {
@@ -146,6 +212,7 @@ public class App {
     /**
      * Cria um novo navio para o sistema a partir da entrada do usuario,
      * tanto sucesso quanto falha eh informado ao usuario atraves de uma mensagem
+     *
      * @param frota Colecao de navios do sistema
      */
     private void criarNovoNavio(Frota frota) {
@@ -175,6 +242,7 @@ public class App {
     /**
      * Cria um novo porto para o sistema a partir da entrada do usuario,
      * tanto sucesso quanto falha eh informado ao usuario atraves de uma mensagem
+     *
      * @param portuario Colecao de portos do sistema
      */
     private void criarNovoPorto(Portuario portuario) {

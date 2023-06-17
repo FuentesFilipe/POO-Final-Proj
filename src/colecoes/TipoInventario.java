@@ -31,7 +31,7 @@ public class TipoInventario {
      */
     public void carregaDadosIniciais() {
         try {
-            Scanner entrada = new Scanner(new FileReader("src/dados/EXEMPLO-NAVIOS.CSV"));
+            Scanner entrada = new Scanner(new FileReader("src/dados/EXEMPLO-TIPOSCARGAS.CSV"));
             entrada.nextLine(); // Consome a primeira linha do arquivo (cabeçalho)
             while(entrada.hasNextLine()) {
                 String linha = entrada.nextLine().replaceAll(",", ".");
