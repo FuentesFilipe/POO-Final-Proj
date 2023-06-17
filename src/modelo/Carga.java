@@ -66,4 +66,8 @@ public class Carga {
     public Situacao getSituacao() {
         return situacao;
     }
+    
+    public Prioridade getPrioridade() {
+        return prioridade;
+    }
 }
