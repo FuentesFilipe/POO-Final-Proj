@@ -9,24 +9,24 @@ public class Carga {
     private int peso;
     private double valorDeclarado;
     private int tempoMaximo;
-    private Cliente cliente;
-    private Porto origem;
-    private Porto destino;
-    private TipoCarga tipoCarga;
+    private int codCliente;
+    private int codPortoOrigem;
+    private int codPortoDestino;
+    private int codTipoCarga;
     private Situacao situacao;
     private Prioridade prioridade;
 
     public Carga(
-            int identificador, Cliente cliente, Porto origem, Porto destino, int peso,
-            double valorDeclarado, int tempoMaximo, TipoCarga tipoCarga, Prioridade prioridade) {
+            int identificador, int codCliente, int codPortoOrigem, int codPortoDestino, int peso,
+            double valorDeclarado, int tempoMaximo, int codTipoCarga, Prioridade prioridade) {
         this.identificador = identificador;
-        this.cliente = cliente;
+        this.codCliente = codCliente;
         this.peso = peso;
         this.valorDeclarado = valorDeclarado;
         this.tempoMaximo = tempoMaximo;
-        this.origem = origem;
-        this.destino = destino;
-        this.tipoCarga = tipoCarga;
+        this.codPortoOrigem = codPortoOrigem;
+        this.codPortoDestino = codPortoDestino;
+        this.codTipoCarga = codTipoCarga;
         this.situacao = Situacao.PENDENTE;
         this.prioridade = prioridade;
     }
@@ -47,26 +47,26 @@ public class Carga {
         return tempoMaximo;
     }
 
-    public Cliente getCliente() {
-        return cliente;
+    public int getCodCliente() {
+        return codCliente;
     }
 
-    public Porto getOrigem() {
-        return origem;
+    public int getCodPortoOrigem() {
+        return codPortoOrigem;
     }
 
-    public Porto getDestino() {
-        return destino;
+    public int getCodPortoDestino() {
+        return codPortoDestino;
     }
 
-    public TipoCarga getTipoCarga() {
-        return tipoCarga;
+    public int getCodTipoCarga() {
+        return codTipoCarga;
     }
 
     public Situacao getSituacao() {
         return situacao;
     }
-    
+
     public Prioridade getPrioridade() {
         return prioridade;
     }
