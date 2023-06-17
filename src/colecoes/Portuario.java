@@ -18,6 +18,10 @@ public class Portuario {
         return portos;
     }
 
+    public boolean existePorto(int id) {
+        return portos.containsKey(id);
+    }
+
     public boolean addPorto(Porto porto) {
         return portos.putIfAbsent(porto.getId(), porto) == null;
     }

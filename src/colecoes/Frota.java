@@ -17,8 +17,16 @@ public class Frota {
         return navios;
     }
 
+    public boolean existeNavio(String nome) {
+        return navios.containsKey(nome);
+    }
+
     public boolean addNavio(Navio navio) {
         return navios.putIfAbsent(navio.getNome(), navio) == null;
+    }
+
+    public Navio getNavio(String nome) {
+        return navios.get(nome);
     }
 
     /**

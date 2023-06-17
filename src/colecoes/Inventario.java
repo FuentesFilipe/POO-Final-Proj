@@ -23,6 +23,10 @@ public class Inventario {
         return cargasPendentes;
     }
 
+    public boolean existeCarga(int identificador) {
+        return cargas.containsKey(identificador);
+    }
+
     public boolean addCarga(Carga carga) {
         if (cargas.putIfAbsent(carga.getIdentificador(), carga) == null) {
             cargasPendentes.offer(carga);

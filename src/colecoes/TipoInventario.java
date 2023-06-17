@@ -17,6 +17,10 @@ public class TipoInventario {
         return tipoCargas;
     }
 
+    public boolean existeTipoCarga(int numero) {
+        return tipoCargas.containsKey(numero);
+    }
+
     public boolean addTipoCarga(TipoCarga tipoCarga) {
         return tipoCargas.putIfAbsent(tipoCarga.getNumero(), tipoCarga) == null;
     }

@@ -25,6 +25,10 @@ public class Clientela {
         return false;
     }
 
+    public boolean existeCod(int cod) {
+        return clientes.containsKey(cod);
+    }
+
     public boolean addCliente(Cliente cliente) {
         int cod = cliente.getCod();
         String email = cliente.getEmail();
