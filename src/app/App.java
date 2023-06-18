@@ -1,34 +1,21 @@
 package app;
 
 import colecoes.*;
-//import dados.*;
-//import enums.*;
+import enums.*;
 import enums.Prioridade;
 import modelo.*;
 
-import java.io.*;
-import java.nio.charset.Charset;
 import java.util.InputMismatchException;
-import java.util.Locale;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 public class App {
-    private Scanner entrada = null; // Atributo para entrada de dados
     private Scanner entradaUsuario = null;
     private int escolha = -1;
 
     // Construtor
     public App() {
         entradaUsuario = new Scanner(System.in);
-        try {
-            BufferedReader streamEntrada = new BufferedReader(new FileReader("dados.csv"));
-            entrada = new Scanner(streamEntrada); // Usa como entrada um arquivo
-            PrintStream streamSaida = new PrintStream(new File("resultado.csv"), Charset.forName("UTF-8"));
-            System.setOut(streamSaida); // Usa como saida um arquivo
-        } catch (Exception e) {
-            System.err.println(e);
-        }
     }
 
     public void executa() {
@@ -64,6 +51,38 @@ public class App {
                     break;
                 case 6:
                     mostraCargasCadastradas(inventario, clientela, tipoInventario, portuario);
+                    break;
+                case 9:
+                    // (a partir da fila de cargas pendentes; verifica se é possível designar
+                    //algum navio disponível para cada carga, e atualiza a sua situação. Se há algum navio
+                    //com capacidade de fazer o frete, mas já está designado para outra carga, a carga
+                    //retorna para a fila de fretes pendentes. Se não há nenhum navio com capacidade de
+                    //fazer o frete a carga muda para a situação CANCELADO [se não há cargas na fila de
+                    //cargas pendentes, mostra uma mensagem de erro]).
+                    for (Carga carga : inventario.getCargasPendentes()) {
+                        if (frota.getNavios().isEmpty()) {
+                            System.out.println("Não há navios disponíveis para designar para as cargas pendentes.");
+                            break;
+                        }
+                        // calcular a distancia da rota
+                        double totalDistancia;
+                        Distancia rota = rotas.procuraRota(carga.getCodPortoOrigem(), carga.getCodPortoDestino());
+                        if (rota != null)
+                            totalDistancia = rota.getValor();
+                        else
+                            totalDistancia = 100;
+                        // verificar se algum navio disponivel pode faze a rota
+                        for (Navio navio : frota.getNavios().values()) {
+                            if (navio.getAutonomia() >= totalDistancia) {
+                                carga.atualizarSituacao(Situacao.LOCADO);
+                            }
+                        }
+
+                        if (carga.getSituacao() == Situacao.PENDENTE) {
+                            System.out.println("Não há navios disponíveis para designar para as cargas pendentes.");
+                            break;
+                        }
+                    }
                     break;
                 case 8:
                     System.out.println("Carregando dados iniciais...");

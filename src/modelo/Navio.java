@@ -5,12 +5,14 @@ public class Navio {
     private double velocidade;
     private double autonomia;
     private double custoPorMilhaBasico;
+    private Carga carga;
 
     public Navio(String nome, double velocidade, double autonomia, double custoPorMilhaBasico) {
         this.nome = nome;
         this.velocidade = velocidade;
         this.autonomia = autonomia;
         this.custoPorMilhaBasico = custoPorMilhaBasico;
+        this.carga = null;
     }
 
     public String getNome() {
@@ -27,6 +29,18 @@ public class Navio {
 
     public double getCustoPorMilhaBasico() {
         return custoPorMilhaBasico;
+    }
+
+    public Carga getCarga() {
+        return carga;
+    }
+
+    public void designaCarga(Carga carga) {
+        this.carga = carga;
+    }
+
+    public boolean temCarga() {
+        return carga != null;
     }
 
     @Override

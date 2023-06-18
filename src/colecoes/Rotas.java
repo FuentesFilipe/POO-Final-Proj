@@ -17,17 +17,17 @@ public class Rotas {
         return rotas;
     }
 
-    public boolean existeRota(int origem, int destino) {
+    public Distancia procuraRota(int origem, int destino) {
         for (Distancia rota : rotas) {
             if (rota.getOrigem() == origem && rota.getDestino() == destino) {
-                return true;
+                return rota;
             }
         }
-        return false;
+        return null;
     }
 
     public boolean addRota(Distancia rota) {
-        if (existeRota(rota.getOrigem(), rota.getDestino())) {
+        if (procuraRota(rota.getOrigem(), rota.getDestino()) != null) {
             return false;
         }
         return rotas.add(rota);

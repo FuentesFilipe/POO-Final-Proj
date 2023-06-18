@@ -3,6 +3,8 @@ package modelo;
 import enums.Prioridade;
 import enums.Situacao;
 
+import java.util.Objects;
+
 
 public class Carga {
     private int identificador;
@@ -65,6 +67,36 @@ public class Carga {
 
     public Situacao getSituacao() {
         return situacao;
+    }
+
+    public boolean atualizarSituacao(Situacao novaSituacao) {
+        if (this.situacao == Situacao.FINALIZADO) {
+            System.err.println("Carga se encontra no estado FINALIZADO, não pode ser alterada.");
+            return false;
+        }
+
+        if (novaSituacao == Situacao.LOCADO) {
+            if (this.situacao == Situacao.PENDENTE) {
+                this.situacao = Situacao.LOCADO;
+                return true;
+            } else {
+                System.err.println("A carga só pode ser alterada para LOCADO se estiver na situação PENDENTE.");
+                return false;
+            }
+        } else if (novaSituacao == Situacao.FINALIZADO) {
+            if (this.situacao == Situacao.LOCADO) {
+                this.situacao = Situacao.FINALIZADO;
+                return true;
+            } else {
+                System.err.println("A carga só pode ser alterada para FINALIZADO se estiver na situação LOCADO.");
+                return false;
+            }
+        } else if (novaSituacao == Situacao.CANCELADO) {
+            this.situacao = Situacao.CANCELADO;
+            return true;
+        }
+        System.out.println("Situação inválida.");
+        return false;
     }
 
     public Prioridade getPrioridade() {
