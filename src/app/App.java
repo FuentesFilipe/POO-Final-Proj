@@ -63,8 +63,7 @@ public class App {
                     checarCargas(inventario, portuario, clientela, tipoInventario);
                     break;
                 case 6:
-                    System.out.println("Cargas atuais do sistema:");
-
+                    mostraCargasCadastradas(inventario, clientela, tipoInventario, portuario);
                     break;
                 case 8:
                     System.out.println("Carregando dados iniciais...");
@@ -82,6 +81,40 @@ public class App {
                     System.out.println("Opção inválida!");
                     break;
             }
+        }
+    }
+
+
+    /**
+     * Mostra todas as cargas cadastradas: todos os dados das
+     * cargas, incluindo os dados dos portos de origem e destino, do cliente, do tipo de carga
+     * e da situação; se a carga possui um navio designado, mostra os dados do navio e o
+     * valor final do frete [se não há cargas, mostra uma mensagem de erro]
+     * @param inventario Colecao de cargas do sistema
+     * @param clientela Colecao de clientes do sistema
+     * @param tipoInventario Colecao de tipos de cargas do sistema
+     * @param portuario Colecao de portos do sistema
+     */
+    private static void mostraCargasCadastradas(Inventario inventario, Clientela clientela, TipoInventario tipoInventario, Portuario portuario) {
+        if (!inventario.getCargas().isEmpty()) {
+            System.out.println("Cargas atuais do sistema:");
+            // para cada carga do sistema, mostrar infos da carga, dos portos de origem e destino,
+            // do cliente e do tipo de carga
+            for (Carga carga : inventario.getCargas().values()) {
+                System.out.printf("Carga %d:%n", carga.getIdentificador());
+                System.out.println(carga);
+                System.out.println("Porto de origem:");
+                System.out.println(portuario.getPortos().get(carga.getCodPortoOrigem()));
+                System.out.println("Porto de destino:");
+                System.out.println(portuario.getPortos().get(carga.getCodPortoDestino()));
+                System.out.println("Cliente:");
+                System.out.println(clientela.getClientes().get(carga.getCodCliente()));
+                System.out.println("Tipo de carga:");
+                System.out.println(tipoInventario.getTipoCargas().get(carga.getCodTipoCarga()));
+                System.out.println("--------------------------------------------------");
+            }
+        } else {
+            System.err.println("Não há cargas cadastradas no sistema!");
         }
     }
 
