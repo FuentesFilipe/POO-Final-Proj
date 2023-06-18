@@ -46,6 +46,15 @@ public class Inventario {
         return false;
     }
 
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        for (Carga carga : cargas.values()) {
+            sb.append(carga).append("\n");
+        }
+        return sb.toString();
+    }
+
     public void carregaDadosIniciais() {
         try {
             Scanner entrada = new Scanner(new FileReader("src/dados/EXEMPLO-CARGAS.CSV"));

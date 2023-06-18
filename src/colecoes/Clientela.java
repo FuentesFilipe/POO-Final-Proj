@@ -41,6 +41,15 @@ public class Clientela {
         return true;
     }
 
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        for (Cliente cliente : clientes.values()) {
+            sb.append(cliente).append("\n");
+        }
+        return sb.toString();
+    }
+
     /**
      * Le os dados iniciais do arquivo ...-CLIENTES.CSV
      * e os carrega na colecao de clientes

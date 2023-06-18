@@ -42,6 +42,15 @@ public class Rotas {
         return false;
     }
 
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        for (Distancia rota : rotas) {
+            sb.append(rota).append("\n");
+        }
+        return sb.toString();
+    }
+
     public void carregaDadosIniciais() {
         try {
             Scanner entrada = new Scanner(new FileReader("src/dados/EXEMPLO-DISTANCIAS.CSV"));

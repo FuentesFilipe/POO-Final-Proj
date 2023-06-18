@@ -26,6 +26,15 @@ public class Portuario {
         return portos.putIfAbsent(porto.getId(), porto) == null;
     }
 
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        for (Porto porto : portos.values()) {
+            sb.append(porto).append("\n");
+        }
+        return sb.toString();
+    }
+
     /**
      * Le os dados iniciais do arquivo ...-PORTOS.CSV
      * e os carrega na colecao de portos

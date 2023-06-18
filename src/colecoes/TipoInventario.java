@@ -25,6 +25,15 @@ public class TipoInventario {
         return tipoCargas.putIfAbsent(tipoCarga.getNumero(), tipoCarga) == null;
     }
 
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        for (TipoCarga tipoCarga : tipoCargas.values()) {
+            sb.append(tipoCarga).append("\n");
+        }
+        return sb.toString();
+    }
+
     /**
      * Le os dados iniciais do arquivo ...-TIPOSCARGAS.CSV
      * e os carrega na colecao de tipos de carga

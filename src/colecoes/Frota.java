@@ -29,6 +29,15 @@ public class Frota {
         return navios.get(nome);
     }
 
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        for (Navio navio : navios.values()) {
+            sb.append(navio).append("\n");
+        }
+        return sb.toString();
+    }
+
     /**
      * Le os dados iniciais do arquivo ...-NAVIOS.CSV
      * e os carrega na colecao de navios
