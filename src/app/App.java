@@ -37,6 +37,7 @@ public class App {
         Frota frota = new Frota();
         TipoInventario tipoInventario = new TipoInventario();
         Portuario portuario = new Portuario();
+        Rotas rotas = new Rotas();
 
         while (escolha != 0) {
             mostraMenu();
@@ -72,6 +73,7 @@ public class App {
                     frota.carregaDadosIniciais();
                     tipoInventario.carregaDadosIniciais();
                     inventario.carregaDadosIniciais();
+                    rotas.carregaDadosIniciais();
                     break;
                 case 0:
                     System.out.println("Finalizando sistema...");
