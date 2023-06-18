@@ -60,11 +60,17 @@ public class App {
                 case 5:
                     criarNovaCarga(inventario);
                     break;
+                case 6:
+                    System.out.println("Cargas atuais do sistema:");
+
+                    break;
                 case 8:
                     System.out.println("Carregando dados iniciais...");
                     clientela.carregaDadosIniciais();
                     portuario.carregaDadosIniciais();
                     frota.carregaDadosIniciais();
+                    tipoInventario.carregaDadosIniciais();
+                    inventario.carregaDadosIniciais();
                     break;
                 case 0:
                     System.out.println("Finalizando sistema...");
@@ -267,6 +273,37 @@ public class App {
             System.err.println("Erro: Nenhuma entrada fornecida.");
         }
     }
+
+    // Para poder checar se as cargas cadastradas sao validas eh necessario checar
+    // se os portos, clientes e tipos de carga ja foram cadastrados. O metodo abaixo
+    // vai checar se todos os dados necessarios ja foram cadastrados, e deletar qualquer
+    // carga que nao atenda a esse criterio.
+    private void checarCargas(Inventario inventario, Portuario portuario,
+                              Clientela clientela, TipoInventario tipoInventario) {
+        for (Carga carga : inventario.getCargas().values()) {
+            int codCliente = carga.getCodCliente();
+            int codPortoOrigem = carga.getCodPortoOrigem();
+            int codPortoDestino = carga.getCodPortoDestino();
+            int codTipoCarga = carga.getCodTipoCarga();
+
+            // se a chave nao exite nos clientes, remove a carga
+            if (!clientela.existeCod(codCliente)) {
+                inventario.removeCarga(carga);
+                continue;
+            }
+
+            // se a chave nao existe nos possiveis portos, remove a carga
+            if (!portuario.existePorto(codPortoOrigem) || !portuario.existePorto(codPortoDestino)) {
+                inventario.removeCarga(carga);
+                continue;
+            }
+
+            if (!tipoInventario.existeTipoCarga(codTipoCarga)) {
+                inventario.removeCarga(carga);
+            }
+        }
+    }
+
 
     /**
      * Mostra o menu de opções do sistema
