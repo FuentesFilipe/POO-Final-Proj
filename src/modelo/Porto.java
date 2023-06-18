@@ -22,4 +22,9 @@ public class Porto {
     public String getPais() {
         return pais;
     }
+
+    @Override
+    public String toString() {
+        return String.format("%d;%s;%s", id, nome, pais);
+    }
 }

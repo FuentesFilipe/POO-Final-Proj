@@ -30,4 +30,9 @@ public class Cliente {
     public ArrayList<Carga> getCargas() {
         return cargas;
     }
+
+    @Override
+    public String toString() {
+        return String.format("%d;%s;%s", cod, nome, email);
+    }
 }

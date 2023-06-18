@@ -59,6 +59,7 @@ public class App {
                     break;
                 case 5:
                     criarNovaCarga(inventario);
+                    checarCargas(inventario, portuario, clientela, tipoInventario);
                     break;
                 case 6:
                     System.out.println("Cargas atuais do sistema:");
@@ -280,6 +281,7 @@ public class App {
     // carga que nao atenda a esse criterio.
     private void checarCargas(Inventario inventario, Portuario portuario,
                               Clientela clientela, TipoInventario tipoInventario) {
+        System.out.println("Checando cargas...");
         for (Carga carga : inventario.getCargas().values()) {
             int codCliente = carga.getCodCliente();
             int codPortoOrigem = carga.getCodPortoOrigem();
@@ -289,17 +291,20 @@ public class App {
             // se a chave nao exite nos clientes, remove a carga
             if (!clientela.existeCod(codCliente)) {
                 inventario.removeCarga(carga);
+                System.out.printf("Cliente %d nao existe, removendo carga %d%n", codCliente, carga.getIdentificador());
                 continue;
             }
 
             // se a chave nao existe nos possiveis portos, remove a carga
             if (!portuario.existePorto(codPortoOrigem) || !portuario.existePorto(codPortoDestino)) {
                 inventario.removeCarga(carga);
+                System.out.printf("Porto %d ou %d nao existe, removendo carga %d%n", codPortoOrigem, codPortoDestino, carga.getIdentificador());
                 continue;
             }
 
             if (!tipoInventario.existeTipoCarga(codTipoCarga)) {
                 inventario.removeCarga(carga);
+                System.out.printf("Tipo de carga %d nao existe, removendo carga %d%n", codTipoCarga, carga.getIdentificador());
             }
         }
     }

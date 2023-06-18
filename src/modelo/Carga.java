@@ -70,4 +70,12 @@ public class Carga {
     public Prioridade getPrioridade() {
         return prioridade;
     }
+
+    @Override
+    public String toString() {
+        return String.format(
+                "%d;%d;%d;%d;%d;%.2f;%d;%d;%s;%s",
+                identificador, codCliente, codPortoOrigem, codPortoDestino, peso, valorDeclarado,
+                tempoMaximo, codTipoCarga, situacao, prioridade);
+    }
 }

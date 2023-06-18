@@ -16,4 +16,9 @@ public abstract class TipoCarga {
     public String getDescricao() {
         return descricao;
     }
+
+    @Override
+    public String toString() {
+        return String.format("%d;%s", numero, descricao);
+    }
 }

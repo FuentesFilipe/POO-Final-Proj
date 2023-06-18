@@ -23,4 +23,9 @@ public class Duravel extends TipoCarga {
     public double getPercentIpi() {
         return percentIpi;
     }
+
+    @Override
+    public String toString() {
+        return String.format("%s;%s;%s;%s;%.2f%%", super.toString(), "DURAVEL", setor, materialPrincipal, percentIpi);
+    }
 }

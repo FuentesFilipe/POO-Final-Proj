@@ -28,4 +28,9 @@ public class Navio {
     public double getCustoPorMilhaBasico() {
         return custoPorMilhaBasico;
     }
+
+    @Override
+    public String toString() {
+        return String.format("%s;%.2f;%.2f;%.2f", nome, velocidade, autonomia, custoPorMilhaBasico);
+    }
 }

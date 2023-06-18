@@ -17,4 +17,9 @@ public class Perecivel extends TipoCarga {
     public int getTempoMaxVelocidade() {
         return tempoMaxVelocidade;
     }
+
+    @Override
+    public String toString() {
+        return String.format("%s;%s;%s;%d", super.toString(), "PERECIVEL", origem, tempoMaxVelocidade);
+    }
 }

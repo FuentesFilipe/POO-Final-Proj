@@ -25,6 +25,6 @@ public class Distancia {
 
     @Override
     public String toString() {
-        return origem + ";" + destino + ";" + valor;
+        return String.format("%d;%d;%.2f", origem, destino, valor);
     }
 }
