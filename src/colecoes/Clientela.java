@@ -4,9 +4,10 @@ import modelo.Cliente;
 import modelo.Navio;
 
 import java.io.FileReader;
+import java.io.Serializable;
 import java.util.Scanner;
 import java.util.TreeMap;
-public class Clientela {
+public class Clientela implements Serializable {
     private TreeMap<Integer, Cliente> clientes;
 
     public Clientela() {

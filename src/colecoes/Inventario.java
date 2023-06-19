@@ -4,12 +4,13 @@ import enums.Prioridade;
 import modelo.Carga;
 
 import java.io.FileReader;
+import java.io.Serializable;
 import java.util.Queue;
 import java.util.Scanner;
 import java.util.TreeMap;
 import java.util.LinkedList;
 
-public class Inventario {
+public class Inventario implements Serializable {
     private TreeMap<Integer, Carga> cargas;
     private Queue<Carga> cargasPendentes;
 

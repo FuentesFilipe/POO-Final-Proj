@@ -3,10 +3,11 @@ package colecoes;
 import modelo.Navio;
 
 import java.io.FileReader;
+import java.io.Serializable;
 import java.util.Scanner;
 import java.util.TreeMap;
 
-public class Frota {
+public class Frota implements Serializable {
     private TreeMap<String, Navio> navios;
 
     public Frota() {

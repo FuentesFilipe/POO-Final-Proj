@@ -4,10 +4,11 @@ import modelo.Navio;
 import modelo.Porto;
 
 import java.io.FileReader;
+import java.io.Serializable;
 import java.util.Scanner;
 import java.util.TreeMap;
 
-public class Portuario {
+public class Portuario implements Serializable {
     private TreeMap<Integer, Porto> portos;
 
     public Portuario() {

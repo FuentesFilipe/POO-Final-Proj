@@ -3,10 +3,11 @@ package colecoes;
 import modelo.*;
 
 import java.io.FileReader;
+import java.io.Serializable;
 import java.util.Scanner;
 import java.util.TreeMap;
 
-public class TipoInventario {
+public class TipoInventario implements Serializable {
     private TreeMap<Integer, TipoCarga> tipoCargas;
 
     public TipoInventario() {

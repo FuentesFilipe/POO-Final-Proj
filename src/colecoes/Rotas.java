@@ -3,10 +3,11 @@ package colecoes;
 import modelo.Distancia;
 
 import java.io.FileReader;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Rotas {
+public class Rotas implements Serializable {
     private ArrayList<Distancia> rotas;
 
     public Rotas() {
