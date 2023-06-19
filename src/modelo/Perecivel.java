@@ -1,6 +1,8 @@
 package modelo;
 
-public class Perecivel extends TipoCarga {
+import java.io.Serializable;
+
+public class Perecivel extends TipoCarga implements Serializable {
     private String origem;
     private int tempoMaxVelocidade;
 

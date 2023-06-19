@@ -1,6 +1,8 @@
 package modelo;
 
-public abstract class TipoCarga {
+import java.io.Serializable;
+
+public abstract class TipoCarga implements Serializable {
     private int numero;
     private String descricao;
 

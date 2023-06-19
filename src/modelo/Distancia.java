@@ -1,6 +1,8 @@
 package modelo;
 
-public class Distancia {
+import java.io.Serializable;
+
+public class Distancia implements Serializable {
     private int origem;
     private int destino;
     private double valor;

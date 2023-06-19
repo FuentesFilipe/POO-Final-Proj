@@ -3,10 +3,11 @@ package modelo;
 import enums.Prioridade;
 import enums.Situacao;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 
-public class Carga {
+public class Carga implements Serializable {
     private int identificador;
     private int peso;
     private double valorDeclarado;

@@ -1,6 +1,8 @@
 package modelo;
 
-public class Duravel extends TipoCarga {
+import java.io.Serializable;
+
+public class Duravel extends TipoCarga implements Serializable {
     private String setor;
     private String materialPrincipal;
     private double percentIpi;

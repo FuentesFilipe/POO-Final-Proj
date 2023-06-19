@@ -1,6 +1,8 @@
 package modelo;
 
-public class Navio {
+import java.io.Serializable;
+
+public class Navio implements Serializable {
     private String nome;
     private double velocidade;
     private double autonomia;

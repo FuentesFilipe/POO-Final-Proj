@@ -5,6 +5,10 @@ import enums.*;
 import enums.Prioridade;
 import modelo.*;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.util.InputMismatchException;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
@@ -63,6 +67,12 @@ public class App {
                     break;
                 case 9:
                     fretarCargasPendentes(inventario, frota, tipoInventario, portuario, rotas);
+                    break;
+                case 10:
+                    System.out.println("Digite o nome que deseja para o save:");
+                    String nomeSave = entradaUsuario.nextLine();
+                    System.out.println("Salvando dados...");
+                    salvaDados(inventario, portuario, clientela, tipoInventario, rotas, frota, nomeSave);
                     break;
                 case 0:
                     System.out.println("Finalizando sistema...");
@@ -414,6 +424,28 @@ public class App {
         }
     }
 
+    private void salvaDados(Inventario inventario, Portuario portuario,
+                            Clientela clientela, TipoInventario tipoInventario,
+                            Rotas rotas, Frota frota, String nomeArquivo) {
+        System.out.println("Salvando dados...");
+        try {
+            String caminhoDiretorio = "dadosSalvos";
+            String caminhoArq = caminhoDiretorio + File.separator + nomeArquivo;
+            FileOutputStream fileOut = new FileOutputStream(caminhoArq);
+            ObjectOutputStream out = new ObjectOutputStream(fileOut);
+            out.writeObject(inventario);
+            out.writeObject(portuario);
+            out.writeObject(clientela);
+            out.writeObject(tipoInventario);
+            out.writeObject(rotas);
+            out.writeObject(frota);
+            out.close();
+            fileOut.close();
+            System.out.println("Dados salvos com sucesso!");
+        } catch (IOException e) {
+            System.err.println("Erro: Falha ao salvar dados.");
+        }
+    }
 
     /**
      * Mostra o menu de opções do sistema

@@ -1,6 +1,8 @@
 package modelo;
 
-public class Porto {
+import java.io.Serializable;
+
+public class Porto implements Serializable {
     private int id;
     private String nome;
     private String pais;
