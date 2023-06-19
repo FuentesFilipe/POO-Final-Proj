@@ -26,6 +26,10 @@ public class Portuario {
         return portos.putIfAbsent(porto.getId(), porto) == null;
     }
 
+    public Porto procuraPorto(int id) {
+        return portos.get(id);
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();

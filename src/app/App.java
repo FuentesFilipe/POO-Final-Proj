@@ -59,29 +59,81 @@ public class App {
                     //retorna para a fila de fretes pendentes. Se não há nenhum navio com capacidade de
                     //fazer o frete a carga muda para a situação CANCELADO [se não há cargas na fila de
                     //cargas pendentes, mostra uma mensagem de erro]).
+                    if (inventario.getCargasPendentes().isEmpty()) {
+                        System.out.println("Não há cargas pendentes.");
+                        break;
+                    }
+                    if (frota.getNavios().isEmpty()) {
+                        System.out.println("Frota vazia (não há navios).");
+                        break;
+                    }
+
+                    boolean navioDisponivel = false;
                     for (Carga carga : inventario.getCargasPendentes()) {
-                        if (frota.getNavios().isEmpty()) {
-                            System.out.println("Não há navios disponíveis para designar para as cargas pendentes.");
-                            break;
-                        }
-                        // calcular a distancia da rota
+                        // pegar a distancia da rota
                         double totalDistancia;
                         Distancia rota = rotas.procuraRota(carga.getCodPortoOrigem(), carga.getCodPortoDestino());
                         if (rota != null)
                             totalDistancia = rota.getValor();
                         else
                             totalDistancia = 100;
-                        // verificar se algum navio disponivel pode faze a rota
+
+                        // verificar se algum navio disponivel pode fretar a carga
                         for (Navio navio : frota.getNavios().values()) {
-                            if (navio.getAutonomia() >= totalDistancia) {
+                            if (navio.getAutonomia() >= totalDistancia && !navio.temCarga()) {
+                                navio.designaCarga(carga);
                                 carga.atualizarSituacao(Situacao.LOCADO);
+
+                                // calcular o valor do frete por final
+                                // formaula final eh: precoPorDistancia + precoPorPeso + custoPorRegiao
+                                // precoPorDistancia depende se prioridade da carga eh barata ou rapida, e da distancia
+                                // se BARATO entao precoPorDistancia = totalDistancia * navio.custoPorMilhaBasico
+                                // se RAPIDO entao precoPorDistancia = totalDistancia * (navio.custoPorMilhaBasico * 2)
+                                double precoPorDistancia;
+                                if (carga.getPrioridade() == Prioridade.BARATO)
+                                    precoPorDistancia = totalDistancia * navio.getCustoPorMilhaBasico();
+                                else
+                                    precoPorDistancia = totalDistancia * (navio.getCustoPorMilhaBasico()*2);
+
+                                // precoPorPeso depende do tipo de carga
+                                // se PERECIVEL entao precoPorPeso = carga.peso * 2;
+                                // se DURAVEL entao precoPorPeso = (carga.peso * 1.5) + (tipoCarga.percentIpi * carga.valorDeclarado)
+                                double precoPorPeso;
+                                var aux = tipoInventario.procuraTipoCarga(carga.getCodTipoCarga());
+                                if (aux instanceof Perecivel)
+                                    precoPorPeso = carga.getPeso() * 2;
+                                else
+                                    precoPorPeso = (carga.getPeso() * 1.5) + (((Duravel) aux).getPercentIpi() * carga.getValorDeclarado());
+
+
+                                // custoPorRegiao eh valor fixo dependendo do transporte
+                                // se apenas no brasil entao custoPorRegiao = 10_000
+                                // se internacional entao custoPorRegiao = 50_000
+                                double custoPorRegiao;
+                                Porto auxOrigem = portuario.procuraPorto(carga.getCodPortoOrigem());
+                                Porto auxDestino = portuario.procuraPorto(carga.getCodPortoDestino());
+                                if (auxOrigem.getPais().equalsIgnoreCase("brasil") && auxDestino.getPais().equalsIgnoreCase("brasil"))
+                                    custoPorRegiao = 10_000;
+                                else
+                                    custoPorRegiao = 50_000;
+
+                                // calcular o valor do frete
+                                double valorFrete = precoPorDistancia + precoPorPeso + custoPorRegiao;
+                                System.out.printf("Carga %d designada para o navio %s. Valor do frete: %.2f\n", carga.getIdentificador(), navio.getNome(), valorFrete);
+                                navioDisponivel = true;
+                                break;
+
                             }
                         }
 
-                        if (carga.getSituacao() == Situacao.PENDENTE) {
-                            System.out.println("Não há navios disponíveis para designar para as cargas pendentes.");
-                            break;
-                        }
+                        if (navioDisponivel)
+                            continue; // codigo auxiliar para pular para a proxima carga
+
+                        // se chegou aqui, nao ha nenhum navio disponivel para fretar a carga
+                        // atualizar situacao da carga para CANCELADO e removela da lista de cargas pendentes
+                        carga.atualizarSituacao(Situacao.CANCELADO);
+                        inventario.getCargasPendentes().remove(carga);
+                        System.out.printf("Carga %d cancelada por falta de navios disponíveis.\n", carga.getIdentificador());
                     }
                     break;
                 case 8:

@@ -56,7 +56,7 @@ public class Rotas {
             Scanner entrada = new Scanner(new FileReader("src/dados/EXEMPLO-DISTANCIAS.CSV"));
             entrada.nextLine(); // Consome a primeira linha do arquivo (cabeçalho)
             while (entrada.hasNextLine()) {
-                String linha = entrada.nextLine();
+                String linha = entrada.nextLine().replaceAll(",", ".");
                 String[] dados = linha.split(";");
                 int origem = Integer.parseInt(dados[0]);
                 int destino = Integer.parseInt(dados[1]);

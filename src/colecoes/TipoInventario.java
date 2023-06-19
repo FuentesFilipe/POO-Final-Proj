@@ -25,6 +25,10 @@ public class TipoInventario {
         return tipoCargas.putIfAbsent(tipoCarga.getNumero(), tipoCarga) == null;
     }
 
+    public TipoCarga procuraTipoCarga(int numero) {
+        return tipoCargas.get(numero);
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
