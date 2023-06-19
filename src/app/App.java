@@ -5,13 +5,8 @@ import enums.*;
 import enums.Prioridade;
 import modelo.*;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
-import java.util.InputMismatchException;
-import java.util.NoSuchElementException;
-import java.util.Scanner;
+import java.io.*;
+import java.util.*;
 
 public class App {
     private Scanner entradaUsuario = null;
@@ -71,8 +66,18 @@ public class App {
                 case 10:
                     System.out.println("Digite o nome que deseja para o save:");
                     String nomeSave = entradaUsuario.nextLine();
-                    System.out.println("Salvando dados...");
                     salvaDados(inventario, portuario, clientela, tipoInventario, rotas, frota, nomeSave);
+                    break;
+                case 11:
+                    System.out.println("Digite o nome do save que deseja carregar:");
+                    String nomeLoad = entradaUsuario.nextLine();
+                    var aux = carregaDados(inventario, portuario, clientela, tipoInventario, rotas, frota, nomeLoad);
+                    inventario = (Inventario) aux.get(0);
+                    portuario = (Portuario) aux.get(1);
+                    clientela = (Clientela) aux.get(2);
+                    tipoInventario = (TipoInventario) aux.get(3);
+                    rotas = (Rotas) aux.get(4);
+                    frota = (Frota) aux.get(5);
                     break;
                 case 0:
                     System.out.println("Finalizando sistema...");
@@ -445,6 +450,37 @@ public class App {
         } catch (IOException e) {
             System.err.println("Erro: Falha ao salvar dados.");
         }
+    }
+
+    private ArrayList<Object> carregaDados(Inventario inventario, Portuario portuario, Clientela clientela, TipoInventario tipoInventario, Rotas rotas, Frota frota, String nomeLoad) {
+        System.out.println("Carregando dados...");
+        try {
+            String caminhoDiretorio = "dadosSalvos";
+            String caminhoArq = caminhoDiretorio + File.separator + nomeLoad;
+            FileInputStream fileIn = new FileInputStream(caminhoArq);
+            ObjectInputStream in = new ObjectInputStream(fileIn);
+            inventario = (Inventario) in.readObject();
+            portuario = (Portuario) in.readObject();
+            clientela = (Clientela) in.readObject();
+            tipoInventario = (TipoInventario) in.readObject();
+            rotas = (Rotas) in.readObject();
+            frota = (Frota) in.readObject();
+            in.close();
+            fileIn.close();
+            System.out.println("Dados carregados com sucesso!");
+        } catch (IOException e) {
+            System.err.println("Erro: Falha ao carregar dados.");
+        } catch (ClassNotFoundException e) {
+            System.err.println("Erro: Classe nao encontrada.");
+        }
+        ArrayList<Object> dados = new ArrayList<>();
+        dados.add(inventario);
+        dados.add(portuario);
+        dados.add(clientela);
+        dados.add(tipoInventario);
+        dados.add(rotas);
+        dados.add(frota);
+        return dados;
     }
 
     /**
