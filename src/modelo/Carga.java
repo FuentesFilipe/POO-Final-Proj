@@ -96,7 +96,7 @@ public class Carga implements Serializable {
             this.situacao = Situacao.CANCELADO;
             return true;
         }
-        System.out.println("Situação inválida.");
+        System.err.println("Situação inválida.");
         return false;
     }
 

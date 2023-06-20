@@ -51,6 +51,9 @@ public class App {
                 case 6:
                     mostraCargasCadastradas(inventario, clientela, tipoInventario, portuario);
                     break;
+                case 7:
+                    mudaSituacaoCarga(inventario);
+                    break;
                 case 8:
                     System.out.println("Carregando dados iniciais...");
                     clientela.carregaDadosIniciais();
@@ -86,6 +89,23 @@ public class App {
                     System.out.println("Opção inválida!");
                     break;
             }
+        }
+    }
+
+    private void mudaSituacaoCarga(Inventario inventario) {
+        System.out.println("Digite o código da carga que deseja alterar a situação:");
+        int codigoCarga = entradaUsuario.nextInt();
+        entradaUsuario.nextLine();
+
+        if (!inventario.existeCarga(codigoCarga)) {
+            System.err.println("Carga não encontrada!");
+        } else {
+
+            Carga carga = inventario.getCargas().get(codigoCarga);
+            System.out.println(carga);
+            System.out.println("Digite a nova situação da carga:");
+            String novaSituacao = entradaUsuario.nextLine().toUpperCase();
+            carga.atualizarSituacao(Situacao.valueOf(novaSituacao));
         }
     }
 
