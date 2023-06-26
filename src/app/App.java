@@ -66,6 +66,7 @@ public class App {
                     break;
                 case 9:
                     fretarCargasPendentes(inventario, frota, tipoInventario, portuario, rotas);
+                    inventario.checarCargasPendentes();
                     break;
                 case 10:
                     System.out.println("Digite o nome que deseja para o save:");
@@ -136,7 +137,6 @@ public class App {
                 if (navio.getAutonomia() >= totalDistancia && !navio.temCarga()) {
                     navio.designaCarga(carga);
                     carga.atualizarSituacao(Situacao.LOCADO);
-
                     // calcular o valor do frete por final
                     // formaula final eh: precoPorDistancia + precoPorPeso + custoPorRegiao
                     // precoPorDistancia depende se prioridade da carga eh barata ou rapida, e da distancia
