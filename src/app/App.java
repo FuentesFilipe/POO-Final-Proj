@@ -53,6 +53,7 @@ public class App {
                     break;
                 case 7:
                     mudaSituacaoCarga(inventario);
+                    inventario.checarCargasPendentes();
                     break;
                 case 8:
                     System.out.println("Carregando dados iniciais...");

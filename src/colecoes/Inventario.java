@@ -1,6 +1,7 @@
 package colecoes;
 
 import enums.Prioridade;
+import enums.Situacao;
 import modelo.Carga;
 
 import java.io.FileReader;
@@ -45,6 +46,11 @@ public class Inventario implements Serializable {
             return true;
         }
         return false;
+    }
+
+    // metodo para checar se alguma carga da fila nao esta com a Situacao PENDENTE, se nao estiver, remove da fila
+    public void checarCargasPendentes() {
+        cargasPendentes.removeIf(carga -> carga.getSituacao() != Situacao.PENDENTE);
     }
 
     @Override
